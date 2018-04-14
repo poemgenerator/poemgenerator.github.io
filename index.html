@@ -245,6 +245,7 @@
 		if(numLines > 0 && numLines <= 25) {
 			document.getElementById("poemDiv").innerHTML = getRandomPoem(numLines);
 			numChanges = 0;
+			document.getElementById("changeCount").innerText = numChanges;
 		}
 		else {
 			alert("Please enter a number between 1 and 25");
