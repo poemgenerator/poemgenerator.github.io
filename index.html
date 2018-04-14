@@ -1,258 +1,260 @@
-<script>
-	/**
-	 * @author	"David Coffield"
-	 * @contact	"coffield@my.erau.edu"
-	 */
+<head>
+	<script>
+		/**
+		 * @author	"David Coffield"
+		 * @contact	"coffield@my.erau.edu"
+		 */
 
-	/* 
-	 * Define a dictionary with commonly-used parts of speech and syllable counts.
-	 */
-	var dictionary = {
-		common: {
-			// 100 most commonly-used nouns
-			nouns:["time","year","people","way","day","man","thing","woman","life","child","world","school","state","family","student","group","country","problem","hand","part","place","case","week","company","system","program","question","work","government","number","night","point","home","water","room","mother","area","money","story","fact","month","lot","right","study","book","eye","job","word","business","issue","side","kind","head","house","service","friend","father","power","hour","game","line","end","member","law","car","city","community","name","president","team","minute","idea","kid","body","information","back","parent","face","others","level","office","door","health","person","art","war","history","party","result","change","morning","reason","research","girl","guy","moment","air","teacher","force","education"],
-			// 25 most commonly-used pronouns
-			pronouns:["it","I","you","he","they","we","she","who","them","me","him","one","her","us","something","nothing","anything","himself","everything","someone","themselves","everyone","itself","anyone","myself"],
-			// 100 most commonly-used verbs
-			verbs:["be","have","do","say","go","can","get","would","make","know","will","think","take","see","come","could","want","look","use","find","give","tell","work","may","should","call","try","ask","need","feel","become","leave","put","mean","keep","let","begin","seem","help","talk","turn","start","might","show","hear","play","run","move","like","live","believe","hold","bring","happen","must","write","provide","sit","stand","lose","pay","meet","include","continue","set","learn","change","lead","understand","watch","follow","stop","create","speak","read","allow","add","spend","grow","open","walk","win","offer","remember","love","consider","appear","buy","wait","serve","die","send","expect","build","stay","fall","cut","reach","kill","remain"],
-			// 100 most commonly-used verbs converted into gerunds, where applicable
-			gerunds:["being","having","doing","saying","going","getting","making","knowing","willing","thinking","taking","seeing","coming","wanting","looking","using","finding","giving","telling","working","calling","trying","asking","needing","feeling","becoming","leaving","putting","meaning","keeping","letting","begining","seeming","helping","talking","turning","starting","showing","hearing","playing","running","moving","liking","living","believing","holding","bringing","happening","writing","providing","sitting","standing","losing","paying","meeting","including","continuing","setting","learning","changing","leading","understanding","watching","following","stopping","creating","speaking","reading","allowing","adding","spending","growing","opening","walking","winning","offering","remembering","loving","considering","appearing","buying","waiting","serving","dying","sending","expecting","building","staying","falling","cutting","reaching","killing","remaining"],
-			// 100 most commonly-used adjectives
-			adjectives:["other","new","good","high","old","great","big","American","small","large","national","young","different","black","long","little","important","political","bad","white","real","best","right","social","only","public","sure","low","early","able","human","local","late","hard","major","better","economic","strong","possible","whole","free","military","true","federal","international","full","special","easy","clear","recent","certain","personal","open","red","difficult","available","likely","short","single","medical","current","wrong","private","past","foreign","fine","common","poor","natural","significant","similar","hot","dead","central","happy","serious","ready","simple","left","physical","general","environmental","financial","blue","democratic","dark","various","entire","close","legal","religious","cold","final","main","green","nice","huge","popular","traditional","cultural"],
-			// 100 most commonly-used adverbs
-			adverbs:["up","so","out","just","now","how","then","more","also","here","well","only","very","even","back","there","down","still","in","as","to","when","never","really","most","on","why","about","over","again","where","right","off","always","today","all","far","long","away","yet","often","ever","however","almost","later","much","once","least","ago","together","around","already","enough","both","maybe","actually","probably","home","of course","perhaps","little","else","sometimes","finally","less","better","early","especially","either","quite","simply","nearly","soon","certainly","quickly","no","recently","before","usually","thus","exactly","hard","particularly","pretty","forward","ok","clearly","indeed","rather","that","tonight","close","suddenly","best","instead","ahead","fast","alone","eventually","directly"],
-			// 50 most commonly-used prepositions
-			prepositions:["with","at","from","into","during","including","until","against","among","throughout","despite","towards","upon","concerning","of","to","in","for","on","by","about","like","through","over","before","between","after","since","without","under","within","along","following","across","behind","beyond","plus","except","but","up","out","around","down","off","above","near"],
-			// 25 most commonly-used conjunctions
-			conjunctions:["and","that","but","or","as","if","when","than","because","while","where","after","so","though","since","until","whether","before","although","nor","like","once","unless","now","except"],
-			// 10 most commonly-used interjections
-			interjections:["yes","oh","yeah","no","hey","hi","hello","hmm","ah","wow"]
-		},
-		technology: {
-			nouns:["industry","sensor","identity","information","firewall","technology","internet","network","television","computer","robot","automaton","wire","cable","future","camera","data","system","invention","screen","phone","software","drone","information","engine","turbine","fan","metal","steel","beam","factory","laser","product","algorithm","application","interface","device","gadget","machine","battery","power","spark","tool","signal","idea","medium","message","tomorrow","radio","processor","monitor","car","android","connection","transmission","reflection","measurement","producer","consumer","image","picture","photograph","symbol","language","game"],
-			verbs:["save","delete","wear","visualize","edit","optimize","reach","hack","industrialize","develop","integrate","locate","organize","plan","publish","reflect","select","turn","update","augment","revolutionize","connect","invent","operate","enhance","transport","send","receive","click","upload","download","race","accelerate","automate","build","construct","change","digitize","record","post","share","process","compute","calculate","activate","power","implement","glow","shine","charge","gleam","illuminate","evolve","grow","expand","create","write","transform","display","reach","drive","pilot","innovate","explore","observe","measure","verify","quantify","communicate","advertise","sell","initialize","disable","trace","translate","manufacture","assemble","initiate","shine","polish","watch","read","contain","buy","purchase","shop","search","repeat","perform","imagine","engineer","deploy"],
-			gerunds:["saving","deleting","wearing","visualizing","editing","optimizing","reaching","hacking","industrializing","developing","integrating","locating","organizing","planning","publishing","reflecting","selecting","turning","updating","augmenting","revolutionizing","connecting","inventing","operating","enhancing","transporting","sending","receiving","clicking","uploading","downloading","racing","accelerating","automating","building","constructing","changing","digitizing","recording","posting","sharing","processing","computing","calculating","activating","powering","implementing","glowing","shining","charging","gleaming","illuminating","evolving","growing","expanding","creating","writing","transforming","displaying","reaching","driving","piloting","innovating","exploring","observing","measuring","verifying","quantifying","communicating","advertising","selling","initializing","disabling","tracing","translating","manufacturing","assembling","initiating","shining","polishing","watching","reading","containing","buying","purchasing","shopping","searching","repeating","performing","imagining","engineering","deploying"],
-			adjectives:["luxury","high-end","hybrid","optimized","animatronic","next-generation","modern","solar","scientific","primitive","educational","complex","simple","neon","digital","mechanical","flashing","autonomous","automatic","cyber","electric","fast","new","augmented","chrome","improved","cybernetic","mobile","electronic","smart","efficient","viral","trending","instant","metallic","convenient","metal","convenient","plastic","aluminum","silcon","advanced","online","virtual","robotic","infinite","global","international","systematic","worldwide","artificial","manufactured","evolving","automated","commercial","connected","prosthetic","interstellar","sentient","self-aware","bright","popular","addictive","portable","binary","glowing","shining","polished","charged","packaged"],
-			adverbs:["publicly","mechanically","automatically","robotically","digitally","remotely","autonomously","quickly","efficiently","conveniently","virtually","instantly","fluidly","presently","eventually","soon","always","persistantly","predictably","consistently","instantaneously","reliably","inevitably"]
+		/* 
+		 * Define a dictionary with commonly-used parts of speech and syllable counts.
+		 */
+		var dictionary = {
+			common: {
+				// 100 most commonly-used nouns
+				nouns:["time","year","people","way","day","man","thing","woman","life","child","world","school","state","family","student","group","country","problem","hand","part","place","case","week","company","system","program","question","work","government","number","night","point","home","water","room","mother","area","money","story","fact","month","lot","right","study","book","eye","job","word","business","issue","side","kind","head","house","service","friend","father","power","hour","game","line","end","member","law","car","city","community","name","president","team","minute","idea","kid","body","information","back","parent","face","others","level","office","door","health","person","art","war","history","party","result","change","morning","reason","research","girl","guy","moment","air","teacher","force","education"],
+				// 25 most commonly-used pronouns
+				pronouns:["it","I","you","he","they","we","she","who","them","me","him","one","her","us","something","nothing","anything","himself","everything","someone","themselves","everyone","itself","anyone","myself"],
+				// 100 most commonly-used verbs
+				verbs:["be","have","do","say","go","can","get","would","make","know","will","think","take","see","come","could","want","look","use","find","give","tell","work","may","should","call","try","ask","need","feel","become","leave","put","mean","keep","let","begin","seem","help","talk","turn","start","might","show","hear","play","run","move","like","live","believe","hold","bring","happen","must","write","provide","sit","stand","lose","pay","meet","include","continue","set","learn","change","lead","understand","watch","follow","stop","create","speak","read","allow","add","spend","grow","open","walk","win","offer","remember","love","consider","appear","buy","wait","serve","die","send","expect","build","stay","fall","cut","reach","kill","remain"],
+				// 100 most commonly-used verbs converted into gerunds, where applicable
+				gerunds:["being","having","doing","saying","going","getting","making","knowing","willing","thinking","taking","seeing","coming","wanting","looking","using","finding","giving","telling","working","calling","trying","asking","needing","feeling","becoming","leaving","putting","meaning","keeping","letting","begining","seeming","helping","talking","turning","starting","showing","hearing","playing","running","moving","liking","living","believing","holding","bringing","happening","writing","providing","sitting","standing","losing","paying","meeting","including","continuing","setting","learning","changing","leading","understanding","watching","following","stopping","creating","speaking","reading","allowing","adding","spending","growing","opening","walking","winning","offering","remembering","loving","considering","appearing","buying","waiting","serving","dying","sending","expecting","building","staying","falling","cutting","reaching","killing","remaining"],
+				// 100 most commonly-used adjectives
+				adjectives:["other","new","good","high","old","great","big","American","small","large","national","young","different","black","long","little","important","political","bad","white","real","best","right","social","only","public","sure","low","early","able","human","local","late","hard","major","better","economic","strong","possible","whole","free","military","true","federal","international","full","special","easy","clear","recent","certain","personal","open","red","difficult","available","likely","short","single","medical","current","wrong","private","past","foreign","fine","common","poor","natural","significant","similar","hot","dead","central","happy","serious","ready","simple","left","physical","general","environmental","financial","blue","democratic","dark","various","entire","close","legal","religious","cold","final","main","green","nice","huge","popular","traditional","cultural"],
+				// 100 most commonly-used adverbs
+				adverbs:["up","so","out","just","now","how","then","more","also","here","well","only","very","even","back","there","down","still","in","as","to","when","never","really","most","on","why","about","over","again","where","right","off","always","today","all","far","long","away","yet","often","ever","however","almost","later","much","once","least","ago","together","around","already","enough","both","maybe","actually","probably","home","of course","perhaps","little","else","sometimes","finally","less","better","early","especially","either","quite","simply","nearly","soon","certainly","quickly","no","recently","before","usually","thus","exactly","hard","particularly","pretty","forward","ok","clearly","indeed","rather","that","tonight","close","suddenly","best","instead","ahead","fast","alone","eventually","directly"],
+				// 50 most commonly-used prepositions
+				prepositions:["with","at","from","into","during","including","until","against","among","throughout","despite","towards","upon","concerning","of","to","in","for","on","by","about","like","through","over","before","between","after","since","without","under","within","along","following","across","behind","beyond","plus","except","but","up","out","around","down","off","above","near"],
+				// 25 most commonly-used conjunctions
+				conjunctions:["and","that","but","or","as","if","when","than","because","while","where","after","so","though","since","until","whether","before","although","nor","like","once","unless","now","except"],
+				// 10 most commonly-used interjections
+				interjections:["yes","oh","yeah","no","hey","hi","hello","hmm","ah","wow"]
+			},
+			technology: {
+				nouns:["industry","sensor","identity","information","firewall","technology","internet","network","television","computer","robot","automaton","wire","cable","future","camera","data","system","invention","screen","phone","software","drone","information","engine","turbine","fan","metal","steel","beam","factory","laser","product","algorithm","application","interface","device","gadget","machine","battery","power","spark","tool","signal","idea","medium","message","tomorrow","radio","processor","monitor","car","android","connection","transmission","reflection","measurement","producer","consumer","image","picture","photograph","symbol","language","game"],
+				verbs:["save","delete","wear","visualize","edit","optimize","reach","hack","industrialize","develop","integrate","locate","organize","plan","publish","reflect","select","turn","update","augment","revolutionize","connect","invent","operate","enhance","transport","send","receive","click","upload","download","race","accelerate","automate","build","construct","change","digitize","record","post","share","process","compute","calculate","activate","power","implement","glow","shine","charge","gleam","illuminate","evolve","grow","expand","create","write","transform","display","reach","drive","pilot","innovate","explore","observe","measure","verify","quantify","communicate","advertise","sell","initialize","disable","trace","translate","manufacture","assemble","initiate","shine","polish","watch","read","contain","buy","purchase","shop","search","repeat","perform","imagine","engineer","deploy"],
+				gerunds:["saving","deleting","wearing","visualizing","editing","optimizing","reaching","hacking","industrializing","developing","integrating","locating","organizing","planning","publishing","reflecting","selecting","turning","updating","augmenting","revolutionizing","connecting","inventing","operating","enhancing","transporting","sending","receiving","clicking","uploading","downloading","racing","accelerating","automating","building","constructing","changing","digitizing","recording","posting","sharing","processing","computing","calculating","activating","powering","implementing","glowing","shining","charging","gleaming","illuminating","evolving","growing","expanding","creating","writing","transforming","displaying","reaching","driving","piloting","innovating","exploring","observing","measuring","verifying","quantifying","communicating","advertising","selling","initializing","disabling","tracing","translating","manufacturing","assembling","initiating","shining","polishing","watching","reading","containing","buying","purchasing","shopping","searching","repeating","performing","imagining","engineering","deploying"],
+				adjectives:["luxury","high-end","hybrid","optimized","animatronic","next-generation","modern","solar","scientific","primitive","educational","complex","simple","neon","digital","mechanical","flashing","autonomous","automatic","cyber","electric","fast","new","augmented","chrome","improved","cybernetic","mobile","electronic","smart","efficient","viral","trending","instant","metallic","convenient","metal","convenient","plastic","aluminum","silcon","advanced","online","virtual","robotic","infinite","global","international","systematic","worldwide","artificial","manufactured","evolving","automated","commercial","connected","prosthetic","interstellar","sentient","self-aware","bright","popular","addictive","portable","binary","glowing","shining","polished","charged","packaged"],
+				adverbs:["publicly","mechanically","automatically","robotically","digitally","remotely","autonomously","quickly","efficiently","conveniently","virtually","instantly","fluidly","presently","eventually","soon","always","persistantly","predictably","consistently","instantaneously","reliably","inevitably"]
+			}
+		};
+
+		var lineStructureOptions = [
+			"Adjective, Noun, Gerund, Adverb",
+			"Interjection, Pronoun, Verb, Adverb",
+			"Preposition, Noun, Conjunction, Pronoun, Verb",
+			"Adverb, Gerund, Preposition, Adjective, Noun",
+			"Adjective, Noun, Adjective, Noun, Adjective, Noun",
+			"Gerund, Preposition, Noun, Gerund, Adverb",
+			"Gerund, Preposition, Noun",
+			"Adjective, Noun, Conjunction, Adjective, Noun",
+			"Simile",
+			"Adverb, Gerund, Adverb, Gerund, Adverb, Gerund"
+		];
+
+		var numChanges = 0;
+
+		/* 
+		 * Define a function to return a given string with the first letter capitalized.
+		 */
+		function firstLetterCapitalized(string) {
+		    return string.charAt(0).toUpperCase() + string.slice(1);
 		}
-	};
 
-	var lineStructureOptions = [
-		"Adjective, Noun, Gerund, Adverb",
-		"Interjection, Pronoun, Verb, Adverb",
-		"Preposition, Noun, Conjunction, Pronoun, Verb",
-		"Adverb, Gerund, Preposition, Adjective, Noun",
-		"Adjective, Noun, Adjective, Noun, Adjective, Noun",
-		"Gerund, Preposition, Noun, Gerund, Adverb",
-		"Gerund, Preposition, Noun",
-		"Adjective, Noun, Conjunction, Adjective, Noun",
-		"Simile",
-		"Adverb, Gerund, Adverb, Gerund, Adverb, Gerund"
-	];
-	
-	var numChanges = 0;
-	
-	/* 
-	 * Define a function to return a given string with the first letter capitalized.
-	 */
-	function firstLetterCapitalized(string) {
-	    return string.charAt(0).toUpperCase() + string.slice(1);
-	}
+		/* 
+		 * Define a function to return a random integer given a minimum and maximum.
+		 */
+		function getRandomNumber(min, max) {
+		    return Math.floor(Math.random() * parseInt(max)) + parseInt(min);
+		}
 
-	/* 
-	 * Define a function to return a random integer given a minimum and maximum.
-	 */
-	function getRandomNumber(min, max) {
-	    return Math.floor(Math.random() * parseInt(max)) + parseInt(min);
-	}
+		function getRandomLine() {
+			var line = "";
+			var lineStructure = getRandomLineStructure();
 
-	function getRandomLine() {
-		var line = "";
-		var lineStructure = getRandomLineStructure();
+			var noun = getRandomWord("Noun");
+			var pronoun = getRandomWord("Pronoun");
+			var verb = getRandomWord("Verb");
+			var gerund = getRandomWord("Gerund");
+			var adjective = getRandomWord("Adjective");
+			var adverb = getRandomWord("Adverb");
+			var preposition = getRandomWord("Preposition");
+			var conjunction = getRandomWord("Conjunction");
+			var interjection = getRandomWord("Interjection");
 
-		var noun = getRandomWord("Noun");
-		var pronoun = getRandomWord("Pronoun");
-		var verb = getRandomWord("Verb");
-		var gerund = getRandomWord("Gerund");
-		var adjective = getRandomWord("Adjective");
-		var adverb = getRandomWord("Adverb");
-		var preposition = getRandomWord("Preposition");
-		var conjunction = getRandomWord("Conjunction");
-		var interjection = getRandomWord("Interjection");
-
-		switch (lineStructure) {
-			case "Adjective, Noun, Gerund, Adverb":
-				line += firstLetterCapitalized(adjective.value) + " " + noun.value + " " + gerund.value + " " + adverb.value;
-				break;
-			case "Interjection, Pronoun, Verb, Adverb":
-				if (getRandomNumber(0,1) == 0) {
-					line += firstLetterCapitalized(interjection.value) + "!" + " " + firstLetterCapitalized(pronoun.value) + " " + verb.value + " " + adverb.value;
-				}
-				else {
-					line += firstLetterCapitalized(interjection.value) + "," + " " + pronoun.value + " " + verb.value + " " + adverb.value;
-				}
-				break;
-			case "Preposition, Noun, Conjunction, Pronoun, Verb":
-				line += firstLetterCapitalized(preposition.value) + " " + noun.value + " " + conjunction.value + " " + pronoun.value + " " + verb.value;
-				break;
-			case "Adverb, Gerund, Preposition, Adjective, Noun":
-				line += firstLetterCapitalized(adverb.value) + " " + gerund.value + " " + preposition.value + " " + adjective.value + " " + noun.value;
-				break;
-			case "Adjective, Noun, Adjective, Noun, Adjective, Noun":
-				line += firstLetterCapitalized(adjective.value) + " " + noun.value + "," + " ";
-				adjective = getRandomWord("Adjective");
-				noun = getRandomWord("Noun");
-				line +=  adjective.value + " " + noun.value + "," + " ";
-				adjective = getRandomWord("Adjective");
-				noun = getRandomWord("Noun");
-				line += adjective.value + " " + noun.value;
-				break;
-			case "Gerund, Preposition, Noun, Gerund, Adverb":
-				line += firstLetterCapitalized(gerund.value) + " " + preposition.value + " " + noun.value + "," + " ";
-				gerund = getRandomWord("Gerund");
-				line += gerund.value + " " + adverb.value;
-				break;
-			case "Gerund, Preposition, Noun":
-				line += firstLetterCapitalized(gerund.value) + " " + preposition.value + " " + noun.value;
-				break;
-			case "Adjective, Noun, Conjunction, Adjective, Noun":
-				line += firstLetterCapitalized(adjective.value) + " " + noun.value + " " + conjunction.value + " ";
-				adjective = getRandomWord("Adjective");
-				noun = getRandomWord("Noun");
-				line += adjective.value + " " + noun.value;
-				break;
-			case "Simile":
-				if (getRandomNumber(0,1) == 0) {
+			switch (lineStructure) {
+				case "Adjective, Noun, Gerund, Adverb":
+					line += firstLetterCapitalized(adjective.value) + " " + noun.value + " " + gerund.value + " " + adverb.value;
+					break;
+				case "Interjection, Pronoun, Verb, Adverb":
 					if (getRandomNumber(0,1) == 0) {
-						line += "As" + " " + adjective.value + " " + "as" + " " + noun.value;
+						line += firstLetterCapitalized(interjection.value) + "!" + " " + firstLetterCapitalized(pronoun.value) + " " + verb.value + " " + adverb.value;
 					}
 					else {
-						line += "Like" + " " + adjective.value + " " + noun.value;
+						line += firstLetterCapitalized(interjection.value) + "," + " " + pronoun.value + " " + verb.value + " " + adverb.value;
 					}
-				}
-				else {
-					if (getRandomNumber(0,1) == 0) { 
-						line += "As" + " " + adverb.value + " " + "as" + " " + gerund.value;
+					break;
+				case "Preposition, Noun, Conjunction, Pronoun, Verb":
+					line += firstLetterCapitalized(preposition.value) + " " + noun.value + " " + conjunction.value + " " + pronoun.value + " " + verb.value;
+					break;
+				case "Adverb, Gerund, Preposition, Adjective, Noun":
+					line += firstLetterCapitalized(adverb.value) + " " + gerund.value + " " + preposition.value + " " + adjective.value + " " + noun.value;
+					break;
+				case "Adjective, Noun, Adjective, Noun, Adjective, Noun":
+					line += firstLetterCapitalized(adjective.value) + " " + noun.value + "," + " ";
+					adjective = getRandomWord("Adjective");
+					noun = getRandomWord("Noun");
+					line +=  adjective.value + " " + noun.value + "," + " ";
+					adjective = getRandomWord("Adjective");
+					noun = getRandomWord("Noun");
+					line += adjective.value + " " + noun.value;
+					break;
+				case "Gerund, Preposition, Noun, Gerund, Adverb":
+					line += firstLetterCapitalized(gerund.value) + " " + preposition.value + " " + noun.value + "," + " ";
+					gerund = getRandomWord("Gerund");
+					line += gerund.value + " " + adverb.value;
+					break;
+				case "Gerund, Preposition, Noun":
+					line += firstLetterCapitalized(gerund.value) + " " + preposition.value + " " + noun.value;
+					break;
+				case "Adjective, Noun, Conjunction, Adjective, Noun":
+					line += firstLetterCapitalized(adjective.value) + " " + noun.value + " " + conjunction.value + " ";
+					adjective = getRandomWord("Adjective");
+					noun = getRandomWord("Noun");
+					line += adjective.value + " " + noun.value;
+					break;
+				case "Simile":
+					if (getRandomNumber(0,1) == 0) {
+						if (getRandomNumber(0,1) == 0) {
+							line += "As" + " " + adjective.value + " " + "as" + " " + noun.value;
+						}
+						else {
+							line += "Like" + " " + adjective.value + " " + noun.value;
+						}
 					}
 					else {
-						line +=  firstLetterCapitalized(gerund.value) + " " + adverb.value + "like" + " " + adjective.value + " " + noun.value;
+						if (getRandomNumber(0,1) == 0) { 
+							line += "As" + " " + adverb.value + " " + "as" + " " + gerund.value;
+						}
+						else {
+							line +=  firstLetterCapitalized(gerund.value) + " " + adverb.value + "like" + " " + adjective.value + " " + noun.value;
+						}
 					}
-				}
-				break;
-			case "Adverb, Gerund, Adverb, Gerund, Adverb, Gerund":
-				line += firstLetterCapitalized(adverb.value) + " " + gerund.value + "," + " ";
-				adverb = getRandomWord("Adverb");
-				gerund = getRandomWord("Gerund");
-				line +=  adverb.value + " " + gerund.value + "," + " ";
-				adverb = getRandomWord("Adverb");
-				gerund = getRandomWord("Gerund");
-				line += adverb.value + " " + gerund.value;
+					break;
+				case "Adverb, Gerund, Adverb, Gerund, Adverb, Gerund":
+					line += firstLetterCapitalized(adverb.value) + " " + gerund.value + "," + " ";
+					adverb = getRandomWord("Adverb");
+					gerund = getRandomWord("Gerund");
+					line +=  adverb.value + " " + gerund.value + "," + " ";
+					adverb = getRandomWord("Adverb");
+					gerund = getRandomWord("Gerund");
+					line += adverb.value + " " + gerund.value;
+			}
+			line += "<br>";
+			return line;
 		}
-		line += "<br>";
-		return line;
-	}
 
-	function getRandomLineStructure() {
-		return lineStructureOptions[(getRandomNumber(0,lineStructureOptions.length-1))];
-	}
-
-	function getRandomWord(wordType) {
-		var word = {};
-		var vocabulary = {};
-		if (wordType == "Pronoun" || wordType == "Preposition" || wordType == "Conjunction" || wordType == "Interjection") {
-			vocabulary = dictionary.common;
+		function getRandomLineStructure() {
+			return lineStructureOptions[(getRandomNumber(0,lineStructureOptions.length-1))];
 		}
-		else {
-			if (getRandomNumber(1,3) > 1) {
-				vocabulary = dictionary.technology;
-			}	
-			else {
+
+		function getRandomWord(wordType) {
+			var word = {};
+			var vocabulary = {};
+			if (wordType == "Pronoun" || wordType == "Preposition" || wordType == "Conjunction" || wordType == "Interjection") {
 				vocabulary = dictionary.common;
 			}
+			else {
+				if (getRandomNumber(1,3) > 1) {
+					vocabulary = dictionary.technology;
+				}	
+				else {
+					vocabulary = dictionary.common;
+				}
+			}
+			switch (wordType) {
+				case "Noun":
+					wordIndex = getRandomNumber(0,vocabulary.nouns.length-1);
+					word = {
+						value:vocabulary.nouns[wordIndex]
+					};
+					break;
+				case "Pronoun":
+					wordIndex = getRandomNumber(0,vocabulary.pronouns.length-1);
+					word = {
+						value:vocabulary.pronouns[wordIndex]
+					};
+					break;
+				case "Verb":
+					wordIndex = getRandomNumber(0,vocabulary.verbs.length-1);
+					word = {
+						value:vocabulary.verbs[wordIndex]
+					};
+					break;
+				case "Gerund":
+					wordIndex = getRandomNumber(0,vocabulary.gerunds.length-1);
+					word = {
+						value:vocabulary.gerunds[wordIndex]
+					};
+					break;
+				case "Adjective":
+					wordIndex = getRandomNumber(0,vocabulary.adjectives.length-1);
+					word = {
+						value:vocabulary.adjectives[wordIndex]
+					};
+					break;
+				case "Adverb":
+					wordIndex = getRandomNumber(0,vocabulary.adverbs.length-1);
+					word = {
+						value:vocabulary.adverbs[wordIndex]
+					};
+					break;
+				case "Preposition":
+					wordIndex = getRandomNumber(0,vocabulary.prepositions.length-1);
+					word = {
+						value:vocabulary.prepositions[wordIndex]
+					};
+					break;
+				case "Conjunction":
+					wordIndex = getRandomNumber(0,vocabulary.conjunctions.length-1);
+					word = {
+						value:vocabulary.conjunctions[wordIndex]
+					};
+					break;
+				case "Interjection":
+					wordIndex = getRandomNumber(0,vocabulary.interjections.length-1);
+					word = {
+						value:vocabulary.interjections[wordIndex]
+					};
+			}
+			return word;
 		}
-		switch (wordType) {
-			case "Noun":
-				wordIndex = getRandomNumber(0,vocabulary.nouns.length-1);
-				word = {
-					value:vocabulary.nouns[wordIndex]
-				};
-				break;
-			case "Pronoun":
-				wordIndex = getRandomNumber(0,vocabulary.pronouns.length-1);
-				word = {
-					value:vocabulary.pronouns[wordIndex]
-				};
-				break;
-			case "Verb":
-				wordIndex = getRandomNumber(0,vocabulary.verbs.length-1);
-				word = {
-					value:vocabulary.verbs[wordIndex]
-				};
-				break;
-			case "Gerund":
-				wordIndex = getRandomNumber(0,vocabulary.gerunds.length-1);
-				word = {
-					value:vocabulary.gerunds[wordIndex]
-				};
-				break;
-			case "Adjective":
-				wordIndex = getRandomNumber(0,vocabulary.adjectives.length-1);
-				word = {
-					value:vocabulary.adjectives[wordIndex]
-				};
-				break;
-			case "Adverb":
-				wordIndex = getRandomNumber(0,vocabulary.adverbs.length-1);
-				word = {
-					value:vocabulary.adverbs[wordIndex]
-				};
-				break;
-			case "Preposition":
-				wordIndex = getRandomNumber(0,vocabulary.prepositions.length-1);
-				word = {
-					value:vocabulary.prepositions[wordIndex]
-				};
-				break;
-			case "Conjunction":
-				wordIndex = getRandomNumber(0,vocabulary.conjunctions.length-1);
-				word = {
-					value:vocabulary.conjunctions[wordIndex]
-				};
-				break;
-			case "Interjection":
-				wordIndex = getRandomNumber(0,vocabulary.interjections.length-1);
-				word = {
-					value:vocabulary.interjections[wordIndex]
-				};
-		}
-		return word;
-	}
 
-	function getRandomPoem(numLines) {
-		var poem = [];
-		for (var i = 0; i < numLines; i++) {
-			poem.push("<span id='" + i + "' onclick='changeLine(" + i + ")'>" + getRandomLine() + "</span>");
+		function getRandomPoem(numLines) {
+			var poem = [];
+			for (var i = 0; i < numLines; i++) {
+				poem.push("<span id='" + i + "' onclick='changeLine(" + i + ")'>" + getRandomLine() + "</span>");
+			}
+			return poem.join("");
 		}
-		return poem.join("");
-	}
-	
-	function changeLine(spanID) {
-		document.getElementById(spanID).innerHTML = getRandomLine();
-		document.getElementById("changeCount").innerText = ++numChanges;
-	}
-	
-	function writeRandomPoem(numLines) {
-		if(numLines > 0 && numLines <= 25) {
-			document.getElementById("poemDiv").innerHTML = getRandomPoem(numLines);
-			numChanges = 0;
-			document.getElementById("changeCount").innerText = numChanges;
+
+		function changeLine(spanID) {
+			document.getElementById(spanID).innerHTML = getRandomLine();
+			document.getElementById("changeCount").innerText = ++numChanges;
 		}
-		else {
-			alert("Please enter a number between 1 and 25");
+
+		function writeRandomPoem(numLines) {
+			if(numLines > 0 && numLines <= 25) {
+				document.getElementById("poemDiv").innerHTML = getRandomPoem(numLines);
+				numChanges = 0;
+				document.getElementById("changeCount").innerText = numChanges;
+			}
+			else {
+				alert("Please enter a number between 1 and 25");
+			}
 		}
-	}
-</script>
-<title>Poem Generator</title>
+	</script>
+	<title>Poem Generator</title>
+</head>
 <body style="background:linear-gradient(to bottom, rgba(226,226,226,1) 0%,rgba(219,219,219,1) 50%,rgba(254,254,254,1) 100%);" onload="writeRandomPoem(25);">
 	<center>
 		<h1>Poem Generator</h1><br>
