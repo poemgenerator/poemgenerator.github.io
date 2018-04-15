@@ -10,3 +10,7 @@ body {
 div {
   height:500px;
 }
+
+span.hint {
+  font-style:italic;
+}
