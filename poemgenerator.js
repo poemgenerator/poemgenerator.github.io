@@ -33,8 +33,9 @@ function getRandomNumber(min, max) {
 }
 
 function getRandomLine() {
- var line = "";
- var lineStructure = getRandomLineStructure();
+ var line = {};
+ var line.value = "";
+ var line.structure = getRandomLineStructure();
 
  var noun = getRandomWord("Noun");
  var pronoun = getRandomWord("Pronoun");
@@ -46,75 +47,75 @@ function getRandomLine() {
  var conjunction = getRandomWord("Conjunction");
  var interjection = getRandomWord("Interjection");
 
- switch (lineStructure) {
+ switch (line.structure) {
   case "Adjective, Noun, Gerund, Adverb":
-   line += firstLetterCapitalized(adjective.value) + " " + noun.value + " " + gerund.value + " " + adverb.value;
+   line.value += firstLetterCapitalized(adjective.value) + " " + noun.value + " " + gerund.value + " " + adverb.value;
    break;
   case "Interjection, Pronoun, Verb, Adverb":
    if (getRandomNumber(0,1) == 0) {
-    line += firstLetterCapitalized(interjection.value) + "!" + " " + firstLetterCapitalized(pronoun.value) + " " + verb.value + " " + adverb.value;
+    line.value += firstLetterCapitalized(interjection.value) + "!" + " " + firstLetterCapitalized(pronoun.value) + " " + verb.value + " " + adverb.value;
    }
    else {
-    line += firstLetterCapitalized(interjection.value) + "," + " " + pronoun.value + " " + verb.value + " " + adverb.value;
+    line.value += firstLetterCapitalized(interjection.value) + "," + " " + pronoun.value + " " + verb.value + " " + adverb.value;
    }
    break;
   case "Preposition, Noun, Conjunction, Pronoun, Verb":
-   line += firstLetterCapitalized(preposition.value) + " " + noun.value + " " + conjunction.value + " " + pronoun.value + " " + verb.value;
+   line.value += firstLetterCapitalized(preposition.value) + " " + noun.value + " " + conjunction.value + " " + pronoun.value + " " + verb.value;
    break;
   case "Adverb, Gerund, Preposition, Adjective, Noun":
-   line += firstLetterCapitalized(adverb.value) + " " + gerund.value + " " + preposition.value + " " + adjective.value + " " + noun.value;
+   line.value += firstLetterCapitalized(adverb.value) + " " + gerund.value + " " + preposition.value + " " + adjective.value + " " + noun.value;
    break;
   case "Adjective, Noun, Adjective, Noun, Adjective, Noun":
-   line += firstLetterCapitalized(adjective.value) + " " + noun.value + "," + " ";
+   line.value += firstLetterCapitalized(adjective.value) + " " + noun.value + "," + " ";
    adjective = getRandomWord("Adjective");
    noun = getRandomWord("Noun");
-   line +=  adjective.value + " " + noun.value + "," + " ";
+   line.value +=  adjective.value + " " + noun.value + "," + " ";
    adjective = getRandomWord("Adjective");
    noun = getRandomWord("Noun");
-   line += adjective.value + " " + noun.value;
+   line.value += adjective.value + " " + noun.value;
    break;
   case "Gerund, Preposition, Noun, Gerund, Adverb":
-   line += firstLetterCapitalized(gerund.value) + " " + preposition.value + " " + noun.value + "," + " ";
+   line.value += firstLetterCapitalized(gerund.value) + " " + preposition.value + " " + noun.value + "," + " ";
    gerund = getRandomWord("Gerund");
-   line += gerund.value + " " + adverb.value;
+   line.value += gerund.value + " " + adverb.value;
    break;
   case "Gerund, Preposition, Noun":
-   line += firstLetterCapitalized(gerund.value) + " " + preposition.value + " " + noun.value;
+   line.value += firstLetterCapitalized(gerund.value) + " " + preposition.value + " " + noun.value;
    break;
   case "Adjective, Noun, Conjunction, Adjective, Noun":
-   line += firstLetterCapitalized(adjective.value) + " " + noun.value + " " + conjunction.value + " ";
+   line.value += firstLetterCapitalized(adjective.value) + " " + noun.value + " " + conjunction.value + " ";
    adjective = getRandomWord("Adjective");
    noun = getRandomWord("Noun");
-   line += adjective.value + " " + noun.value;
+   line.value += adjective.value + " " + noun.value;
    break;
   case "Simile":
    if (getRandomNumber(0,1) == 0) {
     if (getRandomNumber(0,1) == 0) {
-     line += "As" + " " + adjective.value + " " + "as" + " " + noun.value;
+     line.value += "As" + " " + adjective.value + " " + "as" + " " + noun.value;
     }
     else {
-     line += "Like" + " " + adjective.value + " " + noun.value;
+     line.value += "Like" + " " + adjective.value + " " + noun.value;
     }
    }
    else {
     if (getRandomNumber(0,1) == 0) { 
-     line += "As" + " " + adverb.value + " " + "as" + " " + gerund.value;
+     line.value += "As" + " " + adverb.value + " " + "as" + " " + gerund.value;
     }
     else {
-     line +=  firstLetterCapitalized(gerund.value) + " " + adverb.value + "like" + " " + adjective.value + " " + noun.value;
+     line.value +=  firstLetterCapitalized(gerund.value) + " " + adverb.value + "like" + " " + adjective.value + " " + noun.value;
     }
    }
    break;
   case "Adverb, Gerund, Adverb, Gerund, Adverb, Gerund":
-   line += firstLetterCapitalized(adverb.value) + " " + gerund.value + "," + " ";
+   line.value += firstLetterCapitalized(adverb.value) + " " + gerund.value + "," + " ";
    adverb = getRandomWord("Adverb");
    gerund = getRandomWord("Gerund");
-   line +=  adverb.value + " " + gerund.value + "," + " ";
+   line.value +=  adverb.value + " " + gerund.value + "," + " ";
    adverb = getRandomWord("Adverb");
    gerund = getRandomWord("Gerund");
-   line += adverb.value + " " + gerund.value;
+   line.value += adverb.value + " " + gerund.value;
  }
- line += "<br>";
+ line.value += "<br>";
  return line;
 }
 
@@ -140,55 +141,73 @@ function getRandomWord(wordType) {
   case "Noun":
    wordIndex = getRandomNumber(0,vocabulary.nouns.length-1);
    word = {
-    value:vocabulary.nouns[wordIndex]
+    value:vocabulary.nouns[wordIndex],
+    partOfSpeech:wordType,
+    index:wordIndex
    };
    break;
   case "Pronoun":
    wordIndex = getRandomNumber(0,vocabulary.pronouns.length-1);
    word = {
-    value:vocabulary.pronouns[wordIndex]
+    value:vocabulary.pronouns[wordIndex],
+    partOfSpeech:wordType,
+    index:wordIndex
    };
    break;
   case "Verb":
    wordIndex = getRandomNumber(0,vocabulary.verbs.length-1);
    word = {
-    value:vocabulary.verbs[wordIndex]
+    value:vocabulary.verbs[wordIndex],
+    partOfSpeech:wordType,
+    index:wordIndex
    };
    break;
   case "Gerund":
    wordIndex = getRandomNumber(0,vocabulary.gerunds.length-1);
    word = {
-    value:vocabulary.gerunds[wordIndex]
+    value:vocabulary.gerunds[wordIndex],
+    partOfSpeech:wordType,
+    index:wordIndex
    };
    break;
   case "Adjective":
    wordIndex = getRandomNumber(0,vocabulary.adjectives.length-1);
    word = {
-    value:vocabulary.adjectives[wordIndex]
+    value:vocabulary.adjectives[wordIndex],
+    partOfSpeech:wordType,
+    index:wordIndex
    };
    break;
   case "Adverb":
    wordIndex = getRandomNumber(0,vocabulary.adverbs.length-1);
    word = {
-    value:vocabulary.adverbs[wordIndex]
+    value:vocabulary.adverbs[wordIndex],
+    partOfSpeech:wordType,
+    index:wordIndex
    };
    break;
   case "Preposition":
    wordIndex = getRandomNumber(0,vocabulary.prepositions.length-1);
    word = {
-    value:vocabulary.prepositions[wordIndex]
+    value:vocabulary.prepositions[wordIndex],
+    partOfSpeech:wordType,
+    index:wordIndex
    };
    break;
   case "Conjunction":
    wordIndex = getRandomNumber(0,vocabulary.conjunctions.length-1);
    word = {
-    value:vocabulary.conjunctions[wordIndex]
+    value:vocabulary.conjunctions[wordIndex],
+    partOfSpeech:wordType,
+    index:wordIndex
    };
    break;
   case "Interjection":
    wordIndex = getRandomNumber(0,vocabulary.interjections.length-1);
    word = {
-    value:vocabulary.interjections[wordIndex]
+    value:vocabulary.interjections[wordIndex],
+    partOfSpeech:wordType,
+    index:wordIndex
    };
  }
  return word;
