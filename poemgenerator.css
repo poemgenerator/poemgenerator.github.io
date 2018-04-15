@@ -1,1 +1,12 @@
+/**
+ * @author	"David Coffield"
+ * @contact	"coffield@my.erau.edu"
+ */
 
+body {
+  background:linear-gradient(to bottom, rgba(226,226,226,1) 0%,rgba(219,219,219,1) 50%,rgba(254,254,254,1) 100%);
+}
+
+div {
+  height:500px;
+}
