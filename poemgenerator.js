@@ -33,9 +33,10 @@ function getRandomNumber(min, max) {
 }
 
 function getRandomLine() {
- var line = {};
- var line.value = "";
- var line.structure = getRandomLineStructure();
+ var line = {
+  value:"",
+  structure:getRandomLineStructure()
+ };
 
  var noun = getRandomWord("Noun");
  var pronoun = getRandomWord("Pronoun");
@@ -47,7 +48,7 @@ function getRandomLine() {
  var conjunction = getRandomWord("Conjunction");
  var interjection = getRandomWord("Interjection");
 
- switch (line.structure) {
+ switch (line.structure.value) {
   case "Adjective, Noun, Gerund, Adverb":
    line.value += firstLetterCapitalized(adjective.value) + " " + noun.value + " " + gerund.value + " " + adverb.value;
    break;
@@ -120,7 +121,12 @@ function getRandomLine() {
 }
 
 function getRandomLineStructure() {
- return lineStructureOptions[(getRandomNumber(0,lineStructureOptions.length-1))];
+ lineStructureIndex = getRandomNumber(0,lineStructureOptions.length-1);
+ var lineStructure = {
+  value:lineStructureOptions[lineStructureIndex],
+  index:lineStructureIndex
+ }
+ return lineStructure;
 }
 
 function getRandomWord(wordType) {
