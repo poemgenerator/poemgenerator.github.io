@@ -216,13 +216,13 @@ function getRandomWord(wordType) {
 function getRandomPoem(numLines) {
  var poem = [];
  for (var i = 0; i < numLines; i++) {
-  poem.push("<span id='" + i + "' onclick='changeLine(" + i + ")'>" + getRandomLine() + "</span>");
+  poem.push("<span id='" + i + "' onclick='changeLine(" + i + ")'>" + getRandomLine().value + "</span>");
  }
  return poem.join("");
 }
 
 function changeLine(spanID) {
- document.getElementById(spanID).innerHTML = getRandomLine();
+ document.getElementById(spanID).innerHTML = getRandomLine().value;
  document.getElementById("changeCount").innerText = ++numChanges;
 }
 
