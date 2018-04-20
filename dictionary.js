@@ -35,3 +35,5 @@ var dictionary = {
 		adverbs:["publicly","mechanically","automatically","robotically","digitally","remotely","autonomously","quickly","efficiently","conveniently","virtually","instantly","fluidly","presently","eventually","soon","always","persistantly","predictably","consistently","instantaneously","reliably","inevitably"]
 	}
 };
+
+var alphabet = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
